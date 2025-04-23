@@ -36,51 +36,49 @@ class Scraper
             puts 
             
             team_divs = game_div.css('div.TeamWrappersstyle__DesktopTeamWrapper-sc-uqs6qh-0.fdaoCu')
+
+            away_team = team_divs[0].text
+            home_team = team_divs[1].text
+    
+            game = {
+              index: index + 1,
+              away_team: away_team,
+              away_team_starting_pitcher: nil,
+              home_team: home_team,
+              home_team_starting_pitcher: nil,
+            }
+            
+            starting_pitchers = []
             
             pitchers_div = game_div.css('div.PlayerMatchupLayerstyle__PlayerMatchupLayerWrapper-sc-1dj9z50-0.iSuMKo.matchup-wrapper')
             
-            
-            pitchers_div.css('.PlayerMatchupLayerstyle__PlayerMatchupTeamWrapper-sc-1dj9z50-2').each do |team_div|
-              puts "Team: #{team_div.text.strip}"
-            end
-
-           pitchers_div .css('a[data-testid="link"]').each do |pitcher|
+            pitchers_div .css('a[data-testid="link"]').each do |pitcher|
               name = pitcher.at_css('div[name]')&.[]('name')
-              profile_url = pitcher['href']
-              img_tag = pitcher.css('img').first
-              img_url = img_tag ? img_tag['src'] : nil
-              puts "Player: #{name}"
-              puts "Profile URL: #{profile_url}"
-              puts "Image URL: #{img_url}"
+              # profile_url = pitcher['href']
+              # img_tag = pitcher.css('img').first
+              # img_url = img_tag ? img_tag['src'] : nil
+              # puts "Player: #{name}"
+              # puts "Profile URL: #{profile_url}"
+              # puts "Image URL: #{img_url}"
 
-              # binding.pry
+              starting_pitchers << name
             end
 
-
-
-
-
-
-            # binding.pry
-
-          
-            home_team = team_divs[0].text
-            away_team = team_divs[1].text
-
-            
-
-            # game = Game.new()
-  
             game = {
               index: index + 1,
-              home_team: home_team,
               away_team: away_team,
+              away_team_starting_pitcher: starting_pitchers[0],
+              home_team: home_team,
+              home_team_starting_pitcher: starting_pitchers[1],
             }
+
+            # game = Game.new(index + 1, user_date, away_team_starting_pitcher, away_team, home_team, home_team_starting_pitcher, innings)
   
-            Game.all << game
+            # Game.all << game
 
   
-            puts "#{away_team} vs #{home_team}"
+            puts "#{game[:away_team]} vs #{game[:home_team]}"
+            puts "SP #{game[:away_team_starting_pitcher]} v SP #{game[:home_team_starting_pitcher]}"
             puts "--------------------------------------------"
             puts    
           end
