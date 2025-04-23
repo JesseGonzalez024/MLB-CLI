@@ -20,7 +20,7 @@ class Game
   
   @@all = []
 
-  def initialize (index, date, away_team_starting_pitcher, away_team, home_team, home_team_starting_pitcher, innings)
+  def initialize (index, date, away_team_starting_pitcher, away_team, home_team, home_team_starting_pitcher, innings, final_score_url = nil, final_score = nil)
     @index = index
     @date = date
     @away_team = away_team
@@ -35,6 +35,8 @@ class Game
   def self.all
     @@all
   end
+
+  
 
   # def self.find_by_id(index)
   #   @@all.find {|game| character.index == index}
