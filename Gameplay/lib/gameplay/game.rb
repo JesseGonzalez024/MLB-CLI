@@ -16,19 +16,16 @@
 # end
 # 
 class Game
-  attr_accessor :index, :date, :away_team_starting_pitcher, :away_team, :home_team, :home_team_starting_pitcher, :innings
+  attr_accessor :index, :date, :away_team_starting_pitcher , :away_team, :home_team, :starting_pitchers
   
   @@all = []
 
-  def initialize (index, date, away_team_starting_pitcher, away_team, home_team, home_team_starting_pitcher, innings, final_score_url = nil, final_score = nil)
+  def initialize (index, date, away_team, home_team)
     @index = index
     @date = date
     @away_team = away_team
-    @away_team_starting_pitcher = away_team_starting_pitcher
     @home_team = home_team
-    @home_team_starting_pitcher = home_team_starting_pitcher
-    @innings = innings
-
+    @starting_pitchers = []
     @@all << self
   end
 
@@ -36,10 +33,8 @@ class Game
     @@all
   end
 
-  
-
-  # def self.find_by_id(index)
-  #   @@all.find {|game| character.index == index}
-  # end
+  def self.find_by_id(user_input)
+    @@all.find {|game| game.index == user_input + 1}
+  end
 
 end
